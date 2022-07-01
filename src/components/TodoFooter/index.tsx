@@ -14,7 +14,7 @@ export default function TodoFooter() {
   const lists = todoState
   // @ts-ignore
   const { arr, active } = filterState
-
+  // @ts-ignore
   const leftCount = lists.filter((item: { done: any }) => !item.done).length
   const handleClearDoned = () => todoActions.todoClearDoned()
   const handleActive = (item: any) => filterActions.filterActive(item)
@@ -46,3 +46,4 @@ export default function TodoFooter() {
     </footer>
   )
 }
+
