@@ -7,7 +7,6 @@ export default function TodoMain() {
   let todoState = TodoModel.useState()
   let todoActions = TodoModel.useActions()
   let filterState = FilterModel.useState()
-  localStorage.setItem('todoState', JSON.stringify(todoState))
   let renderLists
   const ac = filterState.active
   if (ac === 'active') {
@@ -21,6 +20,7 @@ export default function TodoMain() {
   }
 
   const lists = todoState
+  // @ts-ignore
   const nowStatus = lists.every((item) => item.done)
   const handleChangeAll = () => todoActions.todoCheckAll(!nowStatus)
   return (
