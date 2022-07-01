@@ -1,5 +1,4 @@
 import { SetStateAction, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import TodoModel from '../../model/todo'
 
 export default function TodoHeader() {
