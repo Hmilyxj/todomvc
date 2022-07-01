@@ -1,8 +1,6 @@
 import { setupStore } from '@pure-model/core'
 import { createReactModel } from '@pure-model/react'
 
-
-
 export type Filter = {}
 
 const initialState: Filter = {
