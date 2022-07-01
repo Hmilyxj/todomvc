@@ -1,6 +1,5 @@
 import classNames from 'classnames'
 import { useState, useRef, useEffect, SetStateAction } from 'react'
-import { useDispatch } from 'react-redux'
 import TodoModel from '../../model/todo'
 
 export default function TodoItem({ item }) {
