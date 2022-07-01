@@ -9,19 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import './styles/base.css'
 import './styles/index.css'
 import App from './App'
-// import store from './store'
-// const persistor = persistStore(store)
 
-
-// ReactDOM.render(
-//   // @ts-ignore
-//   <Provider list={ReactModelArgs}>
-//     {/* <PersistGate loading={null} persistor={persistor}> */}
-//     <App />
-//     {/* </PersistGate> */}
-//   </Provider>,
-//   document.querySelector('#root')
-// )
 
 ReactDOM.render(
   <Provider list={[
@@ -38,3 +26,4 @@ ReactDOM.render(
   </Provider>,
   document.querySelector('#root')
 )
+
