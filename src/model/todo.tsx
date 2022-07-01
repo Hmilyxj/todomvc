@@ -1,5 +1,5 @@
 
-import { setupStore } from '@pure-model/core'
+import { setupStore, setupStartCallback } from '@pure-model/core'
 import { createReactModel } from '@pure-model/react'
 
 export type Todo = {
@@ -9,9 +9,8 @@ export type Todo = {
 }
 
 export type Todos = Todo[]
-
 // 定义初始化 state
-const initialState: Todos = JSON.parse(localStorage.getItem('todoState'))
+const initialState: Todos = []
 
 export default createReactModel(() => {
   let { store, actions } = setupStore({
@@ -27,29 +26,53 @@ export default createReactModel(() => {
       todoCheckAll,
       todoModifyName,
       todoClearDoned,
+      updateTodoState,
+      updateTodoStatus,
     },
     // 可选参数，是否开启 redux-logger，默认为 false
     logger: true,
     // 可选参数，是否开启 redux-devtools，默认为 true
     devtools: true,
   })
-
+  setupStartCallback(() => {
+    const list = localStorage.getItem('todoState')
+    actions.updateTodoState(JSON.parse(list) || [])
+  })
   // 必须返回 store + actions 的对象结构
   return { store, actions }
 })
 
+export const updateTodoState = (todos: Todos, list) => {
+  return list
+}
+
+export const updateTodoStatus = (todos: Todos, { id, done }: { id: number; done: boolean }) => {
+  return todos.map((item) => {
+    if (item.id !== id) return item
+    return {
+      ...item,
+      done,
+    }
+  })
+}
+
 export const todoDel = (todos: Todos, id: number) => {
-  return todos.filter((item) => item.id !== id)
+  let result = todos.filter((item) => item.id !== id)
+  localStorage.setItem('todoState', JSON.stringify(result))
+  return result
 }
 
 export const todoChangeDone = (todos: Todos, id: number) => {
-  return todos.map((todo) => {
+  let result = todos.map((todo) => {
     if (todo.id !== id) return todo
     return {
       ...todo,
       done: !todo.done,
     }
   })
+  
+  localStorage.setItem('todoState', JSON.stringify(result))
+  return result
 }
 
 
@@ -59,7 +82,9 @@ export const todoAdd = (todos: Todos, name: string) => {
     name,
     done: false,
   }
-  return todos.concat(item)
+  const list = todos.concat(item)
+  localStorage.setItem('todoState', JSON.stringify(list))
+  return list
 }
 
 export const todoCheckAll = (todos: Todos, done: boolean) => {
@@ -77,5 +102,7 @@ export const todoModifyName = (todos: Todos, { id, name }: { id: number; name: s
 }
 
 export const todoClearDoned = (todos: Todos) => {
-  return todos.filter((item) => !item.done)
+  let result = todos.filter((item) => !item.done)
+  localStorage.setItem('todoState', JSON.stringify(result))
+  return result
 }
